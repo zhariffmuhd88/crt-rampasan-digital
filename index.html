@@ -433,7 +433,7 @@ function vKes(){
   const k=S.kes;
   return `<section class="card"><h2>Maklumat serbuan</h2><p class="lead">Diisi sebelum serbuan (Senarai Semak CPF Sarawak, bahagian 1.0).</p>
   <div class="g2">${fld('tarikh','Tarikh serbuan',{type:'date'})}${fld('masa','Masa serbuan',{type:'time'})}</div>
-  <div class="g2">${fld('noKes','No. kes serbuan',{ph:'cth: Q075/26'})}${fld('fir','First Incident Report – no. laporan polis (pilihan)',{ph:'cth: MIRI/010478/26'})}</div>
+  <div class="g2">${fld('noKes','No. kes serbuan (pilihan, diisi selepas serbuan)',{ph:'cth: Q075/26'})}${fld('fir','First Incident Report – no. laporan polis (pilihan)',{ph:'cth: MIRI/010478/26'})}</div>
   ${fld('premis','Nama premis / pemilik')}${fld('alamat','Alamat premis',{area:1})}
   <div class="g2">${fld('ro','RO')}${fld('crt','CRT bertugas')}</div>
   <h3>Kuasa merampas</h3><div class="chips">${KUASA.map(q=>`<button class="chip ${k.kuasa.includes(q)?'on':''}" data-act="kuasa" data-q="${esc(q)}">${q}</button>`).join('')}</div>
@@ -706,7 +706,7 @@ async function buildPDF(){
   /* 1. cover */
   doc.setFont('helvetica','bold');doc.setFontSize(15);doc.text('LAPORAN RAMPASAN PERANTI DIGITAL (CRT)',PW/2,y+6,{align:'center'});y+=12;doc.setFontSize(9);doc.setFont('helvetica','normal');doc.text('Dijana oleh MyCRT-AID',PW/2,y-4,{align:'center'});y+=2;
   doc.setFontSize(10);doc.setFont('helvetica','normal');doc.text('Seksyen Penguatkuasaan Farmasi · Cawangan Penguatkuasaan Farmasi Sarawak',PW/2,y,{align:'center'});y+=8;
-  table([55,125],[['Tarikh dan masa serbuan',`${dmy(k.tarikh)}${k.masa?', '+k.masa:''}`],['No. kes serbuan',k.noKes||''],['First Incident Report (laporan polis)',k.fir||'-'],['Premis / pemilik',k.premis||''],['Alamat',k.alamat||''],['RO',k.ro||''],['CRT',k.crt||''],['Kuasa merampas',(k.kuasa||[]).join('; ')],['Jenis peranti sasaran',(k.jenis||[]).join(', ')],['Sasaran (iklan / perbualan / produk)',k.sasaran||''],['OKS',[k.oksfb,k.okstel,k.okslain].filter(Boolean).join(' | ')],['AP',[k.apfb,k.aptel,k.aplain].filter(Boolean).join(' | ')],['Pemeliharaan sebelum serbuan',`${k.preserve?'Laman web/post dipelihara (PDF + page source)':'-'}${k.dp?'; Data Preservation CyForS':''}`],['Penyeragaman MST',S.mst.done?'Ya':'Belum disahkan'],['Peralatan disemak',`${Object.values(S.alat).filter(Boolean).length} / ${ALAT.length}`],['Bilangan peranti',String(S.devices.length)]]);
+  table([55,125],[['Tarikh dan masa serbuan',`${dmy(k.tarikh)}${k.masa?', '+k.masa:''}`],['No. kes serbuan',k.noKes||'-'],['First Incident Report (laporan polis)',k.fir||'-'],['Premis / pemilik',k.premis||''],['Alamat',k.alamat||''],['RO',k.ro||''],['CRT',k.crt||''],['Kuasa merampas',(k.kuasa||[]).join('; ')],['Jenis peranti sasaran',(k.jenis||[]).join(', ')],['Sasaran (iklan / perbualan / produk)',k.sasaran||''],['OKS',[k.oksfb,k.okstel,k.okslain].filter(Boolean).join(' | ')],['AP',[k.apfb,k.aptel,k.aplain].filter(Boolean).join(' | ')],['Pemeliharaan sebelum serbuan',`${k.preserve?'Laman web/post dipelihara (PDF + page source)':'-'}${k.dp?'; Data Preservation CyForS':''}`],['Penyeragaman MST',S.mst.done?'Ya':'Belum disahkan'],['Peralatan disemak',`${Object.values(S.alat).filter(Boolean).length} / ${ALAT.length}`],['Bilangan peranti',String(S.devices.length)]]);
   P('Rujukan: Prosedur Kualiti K-PK-14 Rampasan dan Pengendalian Peranti Digital, Keluaran 1.0 (22 Februari 2023); Senarai Semak Operasi Rampasan Digital CPF Sarawak (2022_07).',9);
   /* 2. senarai bongkar */
   page();
@@ -745,7 +745,7 @@ async function buildPDF(){
     }
   }
   const tp=doc.getNumberOfPages();
-  for(let i=1;i<=tp;i++){doc.setPage(i);doc.setFontSize(8);doc.setTextColor(120);doc.text(pdfs(`MyCRT-AID  ·  ${k.noKes||''}  ·  Dijana ${fmt(Date.now())}`),M,290);doc.text(`Muka surat ${i} / ${tp}`,PW-M,290,{align:'right'});doc.setTextColor(0)}
+  for(let i=1;i<=tp;i++){doc.setPage(i);doc.setFontSize(8);doc.setTextColor(120);doc.text(pdfs(['MyCRT-AID',k.noKes,'Dijana '+fmt(Date.now())].filter(Boolean).join('  ·  ')),M,290);doc.text(`Muka surat ${i} / ${tp}`,PW-M,290,{align:'right'});doc.setTextColor(0)}
   return doc.output('blob');
 }
 async function saveFile(blob,name){
@@ -764,7 +764,7 @@ async function exportPDF(btn){
   }catch(e){toast(e&&e.message==='nolib'?'Pustaka PDF belum dimuat. Buka app sekali semasa ada internet.':'PDF gagal dijana')}
   btn.disabled=false;btn.textContent='Muat turun laporan PDF';
 }
-function textSum(){const k=S.kes;return [`RAMPASAN DIGITAL ${k.noKes||''} – ${dmy(k.tarikh)}`,...(k.fir?[`First Incident Report: ${k.fir}`]:[]),`Premis: ${k.premis||''}`,`RO: ${k.ro||''} | CRT: ${k.crt||''}`,'',...S.devices.map(d=>`${d.tanda}: ${sbText(d)}\nKuantiti: ${d.kuantiti||'1 set'} | ${d.dijumpai||''}`),sbClose()].join('\n')}
+function textSum(){const k=S.kes;return [['RAMPASAN DIGITAL',k.noKes,dmy(k.tarikh)].filter(Boolean).join(' – '),...(k.fir?[`First Incident Report: ${k.fir}`]:[]),`Premis: ${k.premis||''}`,`RO: ${k.ro||''} | CRT: ${k.crt||''}`,'',...S.devices.map(d=>`${d.tanda}: ${sbText(d)}\nKuantiti: ${d.kuantiti||'1 set'} | ${d.dijumpai||''}`),sbClose()].join('\n')}
 
 /* ---------- events ---------- */
 let armed=null;
