@@ -1,7 +1,7 @@
 {
-  "name": "CRT Rampasan Digital",
-  "short_name": "CRT Digital",
-  "description": "Panduan langkah demi langkah rampasan peranti digital untuk Cyber Responder Team (CRT).",
+  "name": "MyCRT-AID",
+  "short_name": "MyCRT-AID",
+  "description": "MyCRT-AID: panduan langkah demi langkah rampasan peranti digital untuk Cyber Responder Team (CRT).",
   "lang": "ms",
   "start_url": "./",
   "scope": "./",
@@ -10,6 +10,7 @@
   "background_color": "#16191c",
   "theme_color": "#16191c",
   "icons": [
+    { "src": "icons/logo.svg", "sizes": "any", "type": "image/svg+xml" },
     { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
     { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }

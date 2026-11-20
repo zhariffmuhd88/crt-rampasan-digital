@@ -1,6 +1,8 @@
-# CRT Rampasan Digital
+<p align="center"><img src="icons/logo.svg" width="140" alt="Logo MyCRT-AID"></p>
 
-Progressive Web App (PWA) untuk Cyber Responder Team (CRT), Cawangan Penguatkuasaan Farmasi Sarawak: panduan langkah demi langkah semasa rampasan peranti digital, dengan muat naik gambar, animasi tunjuk cara, draf Senarai Bongkar dan laporan PDF.
+# MyCRT-AID
+
+**MyCRT-AID** ialah Progressive Web App (PWA) untuk Cyber Responder Team (CRT), Cawangan Penguatkuasaan Farmasi Sarawak: panduan langkah demi langkah semasa rampasan peranti digital, dengan muat naik gambar, animasi tunjuk cara, draf Senarai Bongkar dan laporan PDF.
 
 ## Rujukan prosedur
 - Prosedur Kualiti K-PK-14 *Rampasan dan Pengendalian Peranti Digital*, Keluaran 1.0 (22 Februari 2023), Bahagian Penguatkuasaan Farmasi KKM
@@ -31,3 +33,6 @@ manifest.webmanifest   maklumat PWA
 sw.js                  service worker (luar talian)
 icons/                 ikon app
 ```
+
+## Logo
+Konsep **Lak Pua**: lak rasmi dikelilingi corak zigzag dan berlian ala pua kumbu Iban, dengan telefon dan kanta pembesar di tengah, mewakili ekshibit digital yang dimeterai dan dipelihara rantaian keterangannya. Warna hitam, kuning dan merah diilhamkan daripada warna Sarawak.
