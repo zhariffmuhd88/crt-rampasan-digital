@@ -1,6 +1,6 @@
 /* MyCRT-AID – service worker
    Naikkan VERSION setiap kali index.html dikemas kini supaya pengguna dapat versi baru. */
-const VERSION = 'crt-v1.1.0';
+const VERSION = 'crt-v1.2.0';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/icon-maskable-512.png', './icons/apple-touch-icon.png', './icons/logo.svg', './icons/favicon-32.png'];
 const CDN = ['https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'];
 
